@@ -8,10 +8,11 @@ import time
 import os
 import ctypes
 import pyaudio
-from PyInstaller.utils.hooks import collect_data_files,collect_submodules
+from win10toast import ToastNotifier
+from PyInstaller.utils.hooks import collect_data_files, collect_submodules
 
-#should only require hiddenimports
-#datas = collect_data_files('pyaudio')
+# should only require hiddenimports
+# datas = collect_data_files('pyaudio')
 hiddenimports = collect_submodules('pyaudio')
 
 global sound_path
@@ -31,6 +32,7 @@ class Pomodoro(QMainWindow):
 
         myappid = 'Yowa.PomodoroTimer.PomStreamTimer.1.0'  # arbitrary string
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        self.ui.ding_button.clicked.connect(self.ding_button_clicked)
 
     def start_button_clicked(self):
         self.worker = WorkerThread(self.ui.cycles.value(), self.ui.work_time.value(), self.ui.break_time.value(),
@@ -48,6 +50,7 @@ class Pomodoro(QMainWindow):
         file = open('time.txt', 'w')
         file.write('')
         file.close()
+        self.evt_make_sound()
 
     def evt_make_sound(self):
         self.sounder = AudioThread(sound_path)
@@ -75,6 +78,11 @@ class Pomodoro(QMainWindow):
         global sound_path
         sound = QFileDialog.getOpenFileName(parent=self, caption='Select sound file', filter=file_filter)
         sound_path = str(os.path.abspath(sound[0]))
+
+    def ding_button_clicked(self):
+        self.sounder = AudioThread(sound_path)
+        if self.ui.sound_check.isChecked():
+            self.sounder.start()
 
 
 class WorkerThread(QThread):

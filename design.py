@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayoutWidget = QWidget(self.centralwidget)
         self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(10, 160, 281, 41))
+        self.horizontalLayoutWidget.setGeometry(QRect(10, 160, 281, 34))
         self.horizontalLayout = QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -70,6 +70,17 @@ class Ui_MainWindow(object):
         self.sound_check.setChecked(True)
 
         self.horizontalLayout.addWidget(self.sound_check)
+
+        self.ding_button = QPushButton(self.horizontalLayoutWidget)
+        self.ding_button.setObjectName(u"ding_button")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.ding_button.sizePolicy().hasHeightForWidth())
+        self.ding_button.setSizePolicy(sizePolicy2)
+        self.ding_button.setMaximumSize(QSize(15, 15))
+
+        self.horizontalLayout.addWidget(self.ding_button)
 
         self.gridLayoutWidget = QWidget(self.centralwidget)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
@@ -148,6 +159,10 @@ class Ui_MainWindow(object):
         self.sound_check.setToolTip(QCoreApplication.translate("MainWindow", u"Sound on/off", None))
 #endif // QT_CONFIG(tooltip)
         self.sound_check.setText("")
+#if QT_CONFIG(tooltip)
+        self.ding_button.setToolTip(QCoreApplication.translate("MainWindow", u"try sound", None))
+#endif // QT_CONFIG(tooltip)
+        self.ding_button.setText(QCoreApplication.translate("MainWindow", u"\u25b6", None))
         self.work_txt.setText(QCoreApplication.translate("MainWindow", u"work", None))
         self.break_txt.setText(QCoreApplication.translate("MainWindow", u"break", None))
         self.cycle_txt.setText(QCoreApplication.translate("MainWindow", u"cycles", None))
